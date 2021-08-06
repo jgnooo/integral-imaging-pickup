@@ -2,6 +2,11 @@
 Python Implementation of integral imaging pickup system.
 > Li, Gang, et al. "Simplified integral imaging pickup method for real objects using a depth camera." Journal of the Optical Society of Korea 16.4 (2012): 381-385.
 
+Integral imaging system consist of pickup system and display system.   
+- In pickup system, the system generate **Elemental Image Array**.
+- In display system, the observer can observe the 3D display using physical micro-lens array. 
+
+Integral imaging pikcup system using a depth camera generate a **Elemental Image Array**.
 _We use monocular depth estimaion network instead of a depth camera._
 
 ## Requirements
