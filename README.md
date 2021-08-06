@@ -7,6 +7,7 @@ Integral imaging system consist of pickup system and display system.
 - In display system, the observer can observe the 3D display using physical micro-lens array from generated **Elemental Image Array**.
 
 This code is for integral imaging pickup system to generate **Elemental Image Array** and **Sub-aperture Image Array**.   
+   
 _In this system, use monocular depth estimaion network instead of a depth camera._
 
 ## Requirements
