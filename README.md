@@ -4,10 +4,10 @@ Python Implementation of integral imaging pickup system.
 
 Integral imaging system consist of pickup system and display system.   
 - In pickup system, the system generate **Elemental Image Array**.
-- In display system, the observer can observe the 3D display using physical micro-lens array. 
+- In display system, the observer can observe the 3D display using physical micro-lens array from generated **Elemental Image Array**.
 
-Integral imaging pikcup system using a depth camera generate a **Elemental Image Array**.
-_We use monocular depth estimaion network instead of a depth camera._
+This code is for integral imaging pickup system to generate **Elemental Image Array** and **Sub-aperture Image Array**.
+_In this system, use monocular depth estimaion network instead of a depth camera._
 
 ## Requirements
 - PyCuda
