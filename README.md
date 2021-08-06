@@ -2,8 +2,13 @@
 Python Implementation of integral imaging pickup system.
 > Li, Gang, et al. "Simplified integral imaging pickup method for real objects using a depth camera." Journal of the Optical Society of Korea 16.4 (2012): 381-385.
 
+_We use monocular depth estimaion network instead of a depth camera._
 
 ## Requirements
+- PyCuda
+- Tensorflow 2.2
+- Numpy
+- Pilow
 
 <!-- ## Pre-trained model
 * [Trained by NYU RGB-D V2](https://drive.google.com/uc?export=download&id=1k8McRE2vOtrkHmG9ZU6Cd-IUDtr2Fbbv) (650 MB) -->
