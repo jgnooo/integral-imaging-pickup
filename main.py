@@ -8,9 +8,10 @@ import tensorflow as tf
 from PIL import Image
 
 from monodepth.predict import DepthEstimation
-from input_stage import InputStage
-from calculation_stage import CalculationStage
-from sub_aperture import SubAperture
+
+import convert
+import pickup
+import sub_aperture
 
 import utils 
 
@@ -30,8 +31,6 @@ parser.add_argument('--P_L', type=int, default=1.8675, help='Size of elemental l
 parser.add_argument('--f', type=float, default=10, help='Focal length of elemental lens.')
 parser.add_argument('--g', type=float, default=12, help='Gap between lens and display.')
 
-# parser.add_argument('--roi_h', type=int, default=0, help='Extract roi for integral imaging about whole image')
-parser.add_argument('--roi_w', type=int, default=0, help='Extract roi for integral imaging about whole image')
 args = parser.parse_args()
 
 
@@ -48,23 +47,28 @@ def cvt_mm2pixel(inputs, pitch_of_pixel):
 def get_input_params():
     """Parameters
     
-    Object image
-        - color : Color image of the 3D object
-        - depth : Depth image of the 3D object
-        - mask  : Mask image for extracting ROI
+    Image
+        - color : Color image.
+        - depth : Depth image corresponding a color image.
     
-    Parameter input
+    Lens Parameters
         Information of Lens-array
-            - P_L           : Size of elemental lens
-            - num_of_lenses : Number of elemental lens
-            - f             : Focal length of elemental lens
+            - P_L           : Size of elemental lens.
+            - num_of_lenses : Number of elemental lens.
+            - f             : Focal length of elemental lens.
 
         Information of Display
-            - P_D           : Pixel pitch of LCD
-            - g             : Gap between lens and display
+            - P_D           : Pixel pitch of LCD.
+            - g             : Gap between lens and display.
     """
+    inputs = {}
+    color = utils.load_image(args.color_path)
+    height, width, _ = color.shape
+
+    name = args.color_path.split('/')[-1].split('.')[0]
+    
+    inputs['name'] = name
     inputs['color'] = color
-    inputs['name'] = color_name
     inputs['depth'] = depth
     inputs['num_of_lenses'] = args.num_of_lenses
     inputs['P_D'] = args.P_D
@@ -77,7 +81,7 @@ def get_input_params():
 
 def main():
     '''
-        Input Stage
+        Input Stage : Generate converted depth.
     '''
     print('\nInput Stage...')
     start = time.time()
@@ -145,14 +149,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # GPU setting for depth estimation
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    if gpus:
-        try:
-            tf.config.experimental.set_virtual_device_configuration(
-                gpus[0],
-                [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048)])
-        except RuntimeError as e:
-            print(e)
-
     main()
