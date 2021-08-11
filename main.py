@@ -17,13 +17,14 @@ import utils
 
 
 parser = argparse.ArgumentParser(description='Generation Light Field using Depth Estimation.')
-parser.add_argument('--color_path', type=str, default='./inputs/color.png', help='Input image.')
-parser.add_argument('--depth_path', type=str, default='./inputs/depth.png', help='Depth image.')
+parser.add_argument('--color_path', type=str, default='./inputs/color.png', help='Path of input image.')
+parser.add_argument('--depth_path', type=str, default='./inputs/depth.png', help='Path of depth image.')
+parser.add_argument('--output_path', type=str, default='./results/', help='Output root directory.')
 
 parser.add_argument('--model_path', type=str, default='./monodepth/model.h5', help='Model file for predicting a depth.')
 
-parser.add_argument('--is_prediction', action='store_true', help='Depth estimation from a RGB image.')
-parser.add_argument('--is_gpu', action='store_true', help='Select calculation system.')
+parser.add_argument('--is_prediction', action='store_true', help='Whether or not need to predict a depth map.')
+parser.add_argument('--is_gpu', action='store_true', help='Select GPU or Not.')
 
 parser.add_argument('--num_of_lenses', type=int, default=200, help='Number of elemental lenses.')
 parser.add_argument('--P_D', type=float, default=0.1245, help='Pixel pitch of LCD.')
@@ -61,12 +62,24 @@ def get_input_params():
             - P_D           : Pixel pitch of LCD.
             - g             : Gap between lens and display.
     """
-    inputs = {}
+    name = args.color_path.split('/')[-1].split('.')[0]
+    
     color = utils.load_image(args.color_path)
     height, width, _ = color.shape
 
-    name = args.color_path.split('/')[-1].split('.')[0]
+    # if you have a depth map corresponding a color image, Do not need to predict.
+    if args.is_prediction:
+        estimator = DepthEstimation()
+
+        # if color height != 480 and color width != 640, Resize the input image.
+        if height != 480 and width != 640:
+            resized_color = np.asarray(Image.fromarray(color.copy()).resize((640, 480)))
+            depth = estimator.predict(resized_color, height, width, args.model_path)
+            depth = np.clip(depth * 1000, 10, 1000)
+    else:
+        depth = np.load(args.depth_path)
     
+    inputs = {}
     inputs['name'] = name
     inputs['color'] = color
     inputs['depth'] = depth
@@ -86,7 +99,9 @@ def main():
     print('\nInput Stage...')
     start = time.time()
 
+    # Setup the input parameters.
     inputs = get_input_params()
+
     output_dir = './results/' + inputs['name'] + '-' + 'F' + str(float(inputs['f'])) + 'G' + str(float(inputs['g'])) + 'N' + str(args.num_of_lenses)
 
     if not os.path.isdir(output_dir):
