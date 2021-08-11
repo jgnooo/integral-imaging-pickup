@@ -88,13 +88,15 @@ def get_input_params():
     inputs['P_L'] = args.P_L
     inputs['f'] = args.f
     inputs['g'] = args.g
-    inputs['roi_w'] = args.roi_w
     return inputs
 
 
 def main():
     '''
-        Input Stage : Generate converted depth.
+        Input Stage : Generate converted depth,
+                      central depth,
+                      depth range,
+                      pixel size of image from input parameters.
     '''
     print('\nInput Stage...')
     start = time.time()
@@ -102,7 +104,9 @@ def main():
     # Setup the input parameters.
     inputs = get_input_params()
 
-    output_dir = './results/' + inputs['name'] + '-' + 'F' + str(float(inputs['f'])) + 'G' + str(float(inputs['g'])) + 'N' + str(args.num_of_lenses)
+    output_dir = os.path.join(
+        args.output_path, 
+    )
 
     if not os.path.isdir(output_dir):
         os.mkdir(output_dir)
@@ -111,7 +115,7 @@ def main():
     cvt_inputs = cvt_mm2pixel(inputs, pitch_of_pixel=inputs['P_D'])
 
     # Convert depth data
-    inputstage = InputStage(output_dir)
+    inputstage = convet(output_dir)
     d, P_I, delta_d, color, L = inputstage.convert_depth(inputs['color'],
                                                          cvt_inputs['depth'],
                                                          cvt_inputs['f'],
