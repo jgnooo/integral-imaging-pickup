@@ -98,9 +98,9 @@ def get_input_params():
 def main():
     '''
         Input Stage : Generate converted depth,
-                      central depth,
-                      depth range,
-                      pixel size of image from input parameters.
+                               central depth,
+                               depth range,
+                               pixel size of image from input parameters.
     '''
     print('\nInput Stage...')
     start = time.time()
