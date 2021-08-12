@@ -29,21 +29,22 @@ def pixel_size_object_img(d, g, P_D):
     return P_I
 
 
-def convert_depth(color, depth, f, g, P_D, P_L):
+def convert_depth(color, depth, f, g, P_D, P_L, output_dir):
     """Convert the depth map.
 
     Args:
-        color    : Color RGB image.
-        depth    : Depth map corresponding the RGB image.
-        f        : Focal length of elemental lens.
-        g        : Gap between lens and display.
-        P_D      : Pixel pitch of LCD.
-        P_L      : Size of elemental lens.
+        color      : Color RGB image.
+        depth      : Depth map corresponding the RGB image.
+        f          : Focal length of elemental lens.
+        g          : Gap between lens and display.
+        P_D        : Pixel pitch of LCD.
+        P_L        : Size of elemental lens.
+        ourput_dir : Output directory for converted depth image.
     Returns:
-        d        : Central depth.
-        P_I      : Pixel size of the object image.
-        delta_d  : Depth range of integral imaging.
-        L        : Converted depth map.
+        d          : Central depth.
+        P_I        : Pixel size of the object image.
+        delta_d    : Depth range of integral imaging.
+        L          : Converted depth map.
     """
     d = central_depth(f, g)
     P_I = pixel_size_object_img(d, g, P_D)
