@@ -7,8 +7,7 @@ import tensorflow as tf
 
 from PIL import Image
 
-from monodepth.predict import DepthEstimation
-
+import monodepth.depth_estimator as estimator
 import convert
 import pickup
 import sub_aperture
@@ -33,6 +32,18 @@ parser.add_argument('--f', type=float, default=10, help='Focal length of element
 parser.add_argument('--g', type=float, default=12, help='Gap between lens and display.')
 
 args = parser.parse_args()
+
+
+def get_depth_map(color):
+    height, width, _ = color.shape
+
+    # if color height != 480 and color width != 640, Resize the input image.
+    if height != 480 and width != 640:
+        color = estimator.resize_image(color)
+    
+    net_input = estimator.preprocess_image(color)
+    depth = estimator.estimate_depth(net_input, height, width, args.model_path)
+    return depth
 
 
 def cvt_mm2pixel(inputs, pitch_of_pixel):
@@ -65,17 +76,10 @@ def get_input_params():
     name = args.color_path.split('/')[-1].split('.')[0]
     
     color = utils.load_image(args.color_path)
-    height, width, _ = color.shape
 
     # if you have a depth map corresponding a color image, Do not need to predict.
     if args.is_prediction:
-        estimator = DepthEstimation()
-
-        # if color height != 480 and color width != 640, Resize the input image.
-        if height != 480 and width != 640:
-            resized_color = np.asarray(Image.fromarray(color.copy()).resize((640, 480)))
-            depth = estimator.predict(resized_color, height, width, args.model_path)
-            depth = np.clip(depth * 1000, 10, 1000)
+        depth = get_depth_map(color)
     else:
         depth = np.load(args.depth_path)
     
@@ -105,7 +109,7 @@ def main():
     inputs = get_input_params()
 
     output_dir = os.path.join(
-        args.output_path, 
+        args.output_path, 'N{}F{}G{}'.format(args.num_of_lenses, args.f, args.g)
     )
 
     if not os.path.isdir(output_dir):
@@ -133,38 +137,38 @@ def main():
         Calculation Stage
     '''
     # Generate elemental images
-    print('\nCalculation Stage...')
-    start = time.time()
-    calculationstage = CalculationStage(output_dir)
-    if args.is_gpu:
-        elem_plane = calculationstage.generate_elemental_imgs_GPU(color, 
-                                                                  L.astype(np.int32),
-                                                                  int(cvt_inputs['P_L']),
-                                                                  P_I,
-                                                                  cvt_inputs['g'],
-                                                                  inputs['num_of_lenses'])
-    else:
-        elem_plane = calculationstage.generate_elemental_imgs_CPU(color, 
-                                                                  L,
-                                                                  int(cvt_inputs['P_L']),
-                                                                  P_I,
-                                                                  cvt_inputs['g'],
-                                                                  inputs['num_of_lenses'])
+    # print('\nCalculation Stage...')
+    # start = time.time()
+    # calculationstage = CalculationStage(output_dir)
+    # if args.is_gpu:
+    #     elem_plane = calculationstage.generate_elemental_imgs_GPU(color, 
+    #                                                               L.astype(np.int32),
+    #                                                               int(cvt_inputs['P_L']),
+    #                                                               P_I,
+    #                                                               cvt_inputs['g'],
+    #                                                               inputs['num_of_lenses'])
+    # else:
+    #     elem_plane = calculationstage.generate_elemental_imgs_CPU(color, 
+    #                                                               L,
+    #                                                               int(cvt_inputs['P_L']),
+    #                                                               P_I,
+    #                                                               cvt_inputs['g'],
+    #                                                               inputs['num_of_lenses'])
 
-    print('Elemental Image Array generated.')
+    # print('Elemental Image Array generated.')
 
-    '''
-        Generate Sub Aperture
-    '''
-    print('\nGenerate sub aperture images...')
-    aperture = SubAperture(output_dir)
-    sub_apertures = aperture.generate_sub_apertures(elem_plane,
-                                                    int(cvt_inputs['P_L']),
-                                                    inputs['num_of_lenses'])
-    print('Sub-Aperture Images generated.')
+    # '''
+    #     Generate Sub Aperture
+    # '''
+    # print('\nGenerate sub aperture images...')
+    # aperture = SubAperture(output_dir)
+    # sub_apertures = aperture.generate_sub_apertures(elem_plane,
+    #                                                 int(cvt_inputs['P_L']),
+    #                                                 inputs['num_of_lenses'])
+    # print('Sub-Aperture Images generated.')
 
-    print('\nElapsed time : {}s'.format(time.time() - start))
-    print('Done.')
+    # print('\nElapsed time : {}s'.format(time.time() - start))
+    # print('Done.')
 
 
 if __name__ == "__main__":
