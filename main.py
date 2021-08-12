@@ -119,24 +119,22 @@ def main():
     cvt_inputs = cvt_mm2pixel(inputs, pitch_of_pixel=inputs['P_D'])
 
     # Convert depth data
-    inputstage = convet(output_dir)
-    d, P_I, delta_d, color, L = inputstage.convert_depth(inputs['color'],
-                                                         cvt_inputs['depth'],
-                                                         cvt_inputs['f'],
-                                                         cvt_inputs['g'],
-                                                         cvt_inputs['P_D'],
-                                                         cvt_inputs['P_L'],
-                                                         inputs['roi_w'])
+    d, P_I, delta_d, color, L = convert.convert_depth(inputs['color'],
+                                                      cvt_inputs['depth'],
+                                                      cvt_inputs['f'],
+                                                      cvt_inputs['g'],
+                                                      cvt_inputs['P_D'],
+                                                      cvt_inputs['P_L'],
+                                                      output_dir)
 
-    print('Parameters generated...')
+    print('Parameters generated.')
 
     # Print parameters
     # utils.print_params(inputs, cvt_inputs, d, P_I, delta_d, color, L)
 
     '''
-        Calculation Stage
+        Generate Elemental image array.
     '''
-    # Generate elemental images
     # print('\nCalculation Stage...')
     # start = time.time()
     # calculationstage = CalculationStage(output_dir)
