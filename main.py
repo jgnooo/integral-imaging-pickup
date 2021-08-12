@@ -102,7 +102,7 @@ def main():
                                depth range,
                                pixel size of image from input parameters.
     '''
-    print('\nInput Stage...')
+    print('\nGenerate parameters for pickup system...')
     start = time.time()
 
     # Setup the input parameters.
@@ -128,7 +128,7 @@ def main():
                                                          cvt_inputs['P_L'],
                                                          inputs['roi_w'])
 
-    print('Input Stage Done.')
+    print('Parameters generated...')
 
     # Print parameters
     # utils.print_params(inputs, cvt_inputs, d, P_I, delta_d, color, L)
