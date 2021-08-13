@@ -20,7 +20,9 @@ _In this system, use monocular depth estimaion network instead of a depth camera
 * [Trained by NYU RGB-D V2](https://drive.google.com/uc?export=download&id=1k8McRE2vOtrkHmG9ZU6Cd-IUDtr2Fbbv) (650 MB)
 
 ## Usage
-
+- Download the model weights.
+    - Go to the link above, and Download model weights
+    - Locate at `monodepth` directory.
     
 ## Results
 <!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
