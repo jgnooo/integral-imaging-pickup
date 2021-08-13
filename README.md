@@ -24,8 +24,8 @@ _In this system, use monocular depth estimaion network instead of a depth camera
     - Go to the link above, and Download model weights.
     - Locate at `monodepth` directory.
 - Prepare the input image.
-    - Locate the input color image to `inputs` directory or `/your/own/dir`.
-    - If you have a depth image corresponding a input color image, locate a depth map to `depths` directory or `/your/own/dir`.
+    - Locate the input color image to `inputs` directory or `/your/own/dir/`.
+    - If you have a depth image corresponding a input color image, locate a depth map to `depths` directory or `/your/own/dir/`.
     
 ## Results
 <!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
