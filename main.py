@@ -103,7 +103,6 @@ def main():
                                pixel size of image from input parameters.
     '''
     print('\nGenerate parameters for pickup system...')
-    start = time.time()
 
     # Setup the input parameters.
     inputs = get_input_params()
@@ -135,25 +134,26 @@ def main():
     '''
         Generate Elemental image array.
     '''
-    # print('\nCalculation Stage...')
-    # start = time.time()
-    # calculationstage = CalculationStage(output_dir)
-    # if args.is_gpu:
-    #     elem_plane = calculationstage.generate_elemental_imgs_GPU(color, 
-    #                                                               L.astype(np.int32),
-    #                                                               int(cvt_inputs['P_L']),
-    #                                                               P_I,
-    #                                                               cvt_inputs['g'],
-    #                                                               inputs['num_of_lenses'])
-    # else:
-    #     elem_plane = calculationstage.generate_elemental_imgs_CPU(color, 
-    #                                                               L,
-    #                                                               int(cvt_inputs['P_L']),
-    #                                                               P_I,
-    #                                                               cvt_inputs['g'],
-    #                                                               inputs['num_of_lenses'])
+    print('\Pickup Stage...')
 
-    # print('Elemental Image Array generated.')
+    calculationstage = CalculationStage(output_dir)
+    if args.is_gpu:
+        EIA = calculationstage.generate_elemental_imgs_GPU(color, 
+                                                           L.astype(np.int32),
+                                                           int(cvt_inputs['P_L']),
+                                                           P_I,
+                                                           cvt_inputs['g'],
+                                                           inputs['num_of_lenses'])
+    else:
+        EIA = calculationstage.generate_elemental_imgs_CPU(color, 
+                                                           L,
+                                                           int(cvt_inputs['P_L']),
+                                                           P_I,
+                                                           cvt_inputs['g'],
+                                                           inputs['num_of_lenses'])
+    
+    utils.save_image(EIA, os.path.join(output_dir, 'elemental_image_array.jpg'))
+    print('Elemental Image Array generated.')
 
     # '''
     #     Generate Sub Aperture
