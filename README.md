@@ -16,8 +16,8 @@ _In this system, use monocular depth estimaion network instead of a depth camera
 - Numpy
 - Pilow
 
-<!-- ## Pre-trained model
-* [Trained by NYU RGB-D V2](https://drive.google.com/uc?export=download&id=1k8McRE2vOtrkHmG9ZU6Cd-IUDtr2Fbbv) (650 MB) -->
+## Pre-trained monocular depth estimation model weights
+* [Trained by NYU RGB-D V2](https://drive.google.com/uc?export=download&id=1k8McRE2vOtrkHmG9ZU6Cd-IUDtr2Fbbv) (650 MB)
 
 ## Usage
 
