@@ -10,6 +10,8 @@ This code is for integral imaging pickup system to generate **Elemental Image Ar
    
 _In this system, use monocular depth estimaion network instead of a depth camera._
 
+## Process
+
 ## Requirements
 - PyCuda
 - Tensorflow 2.2
@@ -45,4 +47,14 @@ _In this system, use monocular depth estimaion network instead of a depth camera
     - See `main.py` parser for more details.
     
 ## Results
+- Depth image
 <!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+- Elemental Image Array
+<!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+- Sub-aperture Image Array
+<!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+
+## To-Do List
+1. Update the code generating sub-aperture images using PyCuda.
+2. GUI.
+3. Check these codes.
