@@ -10,7 +10,7 @@ from PIL import Image
 import monodepth.depth_estimator as estimator
 import convert
 import pickup
-import sub_aperture
+import subaperture
 
 import utils 
 
@@ -134,7 +134,7 @@ def main():
     '''
         Generate Elemental image array.
     '''
-    print('\Pickup Stage...')
+    print('\nPickup Stage...')
 
     calculationstage = CalculationStage(output_dir)
     if args.is_gpu:
@@ -155,18 +155,17 @@ def main():
     utils.save_image(EIA, os.path.join(output_dir, 'elemental_image_array.jpg'))
     print('Elemental Image Array generated.')
 
-    # '''
-    #     Generate Sub Aperture
-    # '''
-    # print('\nGenerate sub aperture images...')
-    # aperture = SubAperture(output_dir)
-    # sub_apertures = aperture.generate_sub_apertures(elem_plane,
-    #                                                 int(cvt_inputs['P_L']),
-    #                                                 inputs['num_of_lenses'])
-    # print('Sub-Aperture Images generated.')
-
-    # print('\nElapsed time : {}s'.format(time.time() - start))
-    # print('Done.')
+    '''
+        Generate Sub Aperture image array.
+    '''
+    print('\nGenerate sub aperture image array...')
+    sub_apertures = subaperture.generate_sub_apertures(elem_plane,
+                                                    int(cvt_inputs['P_L']),
+                                                    inputs['num_of_lenses'])
+    print('Sub-Aperture Images generated.')
+    utils.save_image(sub_apertures, os.path.join(output_dir, 'sub_aperture_array.jpg'))
+    
+    print('\nDone.')
 
 
 if __name__ == "__main__":
