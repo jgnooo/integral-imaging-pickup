@@ -5,13 +5,12 @@ import cv2
 import numpy as np
 
 from PIL import Image
-from tqdm import tqdm
 
 import pycuda.driver as cuda
 import pycuda.autoinit
 from pycuda.compiler import SourceModule
 
-import optics.utils as utils
+import utils
 
 
 def generate_object_coords(color, L):
@@ -234,7 +233,6 @@ def generate_elemental_imgs_GPU(color, L, P_L, P_I, g, num_of_lenses):
     
     EIA = np.stack([elem_R, elem_G, elem_B], axis=2)
     inpainted_EIA = inpainting(EIA.astype(np.uint8), num_of_lenses, P_L)
-    # utils.save_image(inpainted_EIA, './elemental_plane.png')
     return inpainted_EIA
 
 
