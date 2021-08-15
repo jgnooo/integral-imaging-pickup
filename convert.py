@@ -33,7 +33,6 @@ def convert_depth(depth, f, g, P_D, P_L, output_dir):
     """Convert the depth map.
 
     Args:
-        color      : Color RGB image.
         depth      : Depth map corresponding the RGB image.
         f          : Focal length of elemental lens.
         g          : Gap between lens and display.
