@@ -54,10 +54,10 @@ _In this system, use monocular depth estimaion network instead of a depth camera
 <p align="center"><img src="https://user-images.githubusercontent.com/55485826/129468643-645d97be-9ba6-4b54-826b-7243b793132d.png"></p>
    
 - Elemental Image Array
-<!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+<p align="center"><img src="https://user-images.githubusercontent.com/55485826/129468731-6c2303a0-40ed-4c2b-b674-a043565c7dcb.png"></p>
    
 - Sub-aperture Image Array
-<!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+<p align="center"><img src="https://user-images.githubusercontent.com/55485826/129468813-dee15f32-754d-427b-966a-33d87a53d54f.png"></p>
 
 ## To-Do List
 1. Update the code generating sub-aperture images using PyCuda.
