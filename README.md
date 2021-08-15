@@ -48,9 +48,14 @@ _In this system, use monocular depth estimaion network instead of a depth camera
     
 ## Results
 - Depth image
-<!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+<p align="center"><img src="https://user-images.githubusercontent.com/55485826/129468607-d80a5d66-ebfa-4b51-82a0-273b4c6e0931.png"></p>
+   
+- Converted Depth image
+<p align="center"><img src="https://user-images.githubusercontent.com/55485826/129468643-645d97be-9ba6-4b54-826b-7243b793132d.png"></p>
+   
 - Elemental Image Array
 <!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
+   
 - Sub-aperture Image Array
 <!-- <p align="center"><img src="https://user-images.githubusercontent.com/55485826/127944218-2c72c094-2bc6-4b15-8241-f7e36e25dbde.png"></p> -->
 
