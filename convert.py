@@ -29,7 +29,7 @@ def pixel_size_object_img(d, g, P_D):
     return P_I
 
 
-def convert_depth(color, depth, f, g, P_D, P_L, output_dir):
+def convert_depth(depth, f, g, P_D, P_L, output_dir):
     """Convert the depth map.
 
     Args:
@@ -58,4 +58,4 @@ def convert_depth(color, depth, f, g, P_D, P_L, output_dir):
     L[L < converted_depth_min] = converted_depth_min
     L[L > converted_depth_max] = converted_depth_max
 
-    return d, P_I, delta_d, color, L
+    return d, P_I, delta_d, L
