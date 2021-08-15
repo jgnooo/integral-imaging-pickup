@@ -108,11 +108,11 @@ def main():
     inputs = get_input_params()
 
     output_dir = os.path.join(
-        args.output_path, 'N{}F{}G{}'.format(args.num_of_lenses, args.f, args.g)
+        args.output_path, 'N{}F{}G{}_{}'.format(args.num_of_lenses, args.f, args.g, inputs['name'])
     )
 
-    if not os.path.isdir(output_dir):
-        os.mkdir(output_dir)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, exist_ok=True)
     
     # Convert mm to pixel
     cvt_inputs = cvt_mm2pixel(inputs, pitch_of_pixel=inputs['P_D'])
@@ -136,21 +136,20 @@ def main():
     '''
     print('\nPickup Stage...')
 
-    calculationstage = CalculationStage(output_dir)
     if args.is_gpu:
-        EIA = calculationstage.generate_elemental_imgs_GPU(color, 
-                                                           L.astype(np.int32),
-                                                           int(cvt_inputs['P_L']),
-                                                           P_I,
-                                                           cvt_inputs['g'],
-                                                           inputs['num_of_lenses'])
+        EIA = pickup.generate_elemental_imgs_GPU(color, 
+                                                 L.astype(np.int32),
+                                                 int(cvt_inputs['P_L']),
+                                                 P_I,
+                                                 cvt_inputs['g'],
+                                                 inputs['num_of_lenses'])
     else:
-        EIA = calculationstage.generate_elemental_imgs_CPU(color, 
-                                                           L,
-                                                           int(cvt_inputs['P_L']),
-                                                           P_I,
-                                                           cvt_inputs['g'],
-                                                           inputs['num_of_lenses'])
+        EIA = pickup.generate_elemental_imgs_CPU(color, 
+                                                 L,
+                                                 int(cvt_inputs['P_L']),
+                                                 P_I,
+                                                 cvt_inputs['g'],
+                                                 inputs['num_of_lenses'])
     
     utils.save_image(EIA, os.path.join(output_dir, 'elemental_image_array.jpg'))
     print('Elemental Image Array generated.')
@@ -159,9 +158,9 @@ def main():
         Generate Sub Aperture image array.
     '''
     print('\nGenerate sub aperture image array...')
-    sub_apertures = subaperture.generate_sub_apertures(elem_plane,
-                                                    int(cvt_inputs['P_L']),
-                                                    inputs['num_of_lenses'])
+    sub_apertures = subaperture.generate_sub_apertures(EIA,
+                                                       int(cvt_inputs['P_L']),
+                                                       inputs['num_of_lenses'])
     print('Sub-Aperture Images generated.')
     utils.save_image(sub_apertures, os.path.join(output_dir, 'sub_aperture_array.jpg'))
     
