@@ -11,6 +11,7 @@ This code is for integral imaging pickup system to generate **Elemental Image Ar
 _In this system, use monocular depth estimaion network instead of a depth camera._
 
 ## Process
+<p align="center"><img src="https://user-images.githubusercontent.com/55485826/129469057-567113e3-7aa5-46e4-8e29-c9f4242807fd.png"></p>
 
 ## Requirements
 - PyCuda
