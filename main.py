@@ -107,6 +107,7 @@ def main():
     # Setup the input parameters.
     inputs = get_input_params()
 
+    # Make directory for saving result images
     output_dir = os.path.join(
         args.output_path, 'N{}F{}G{}_{}'.format(args.num_of_lenses, args.f, args.g, inputs['name'])
     )
@@ -118,14 +119,15 @@ def main():
     cvt_inputs = cvt_mm2pixel(inputs, pitch_of_pixel=inputs['P_D'])
 
     # Convert depth data
-    d, P_I, delta_d, color, L = convert.convert_depth(inputs['color'],
-                                                      cvt_inputs['depth'],
-                                                      cvt_inputs['f'],
-                                                      cvt_inputs['g'],
-                                                      cvt_inputs['P_D'],
-                                                      cvt_inputs['P_L'],
-                                                      output_dir)
-
+    d, P_I, delta_d, L = convert.convert_depth(cvt_inputs['depth'],
+                                               cvt_inputs['f'],
+                                               cvt_inputs['g'],
+                                               cvt_inputs['P_D'],
+                                               cvt_inputs['P_L'],
+                                               output_dir)
+    
+    utils.save_image(utils.visualize_depth(inputs['depth']), os.path.join(output_dir, 'depth.jpg'))
+    utils.save_image(utils.visualize_depth(L), os.path.join(output_dir, 'converted_depth.jpg'))
     print('Parameters generated.')
 
     # Print parameters
@@ -137,14 +139,14 @@ def main():
     print('\nPickup Stage...')
 
     if args.is_gpu:
-        EIA = pickup.generate_elemental_imgs_GPU(color, 
+        EIA = pickup.generate_elemental_imgs_GPU(inputs['color'], 
                                                  L.astype(np.int32),
                                                  int(cvt_inputs['P_L']),
                                                  P_I,
                                                  cvt_inputs['g'],
                                                  inputs['num_of_lenses'])
     else:
-        EIA = pickup.generate_elemental_imgs_CPU(color, 
+        EIA = pickup.generate_elemental_imgs_CPU(inputs['color'], 
                                                  L,
                                                  int(cvt_inputs['P_L']),
                                                  P_I,
