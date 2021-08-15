@@ -45,7 +45,7 @@ _In this system, use monocular depth estimaion network instead of a depth camera
         --f 10 \
         --g 12
     ```
-    - If you don't have a depth image corresponding a input color image, set flag is_prediction to generate predicted a depth image.
+    - If you don't have a depth image corresponding a input color image, set flag `is_prediction` to generate predicted a depth image.
     - See `main.py` parser for more details.
 
     
