@@ -25,7 +25,7 @@ def preprocess_image(color):
 def load_trained_model(weights_path):
     net = MVAAutoEncoder()
     model = net.build_model()
-    model.load_weigths(weights_path)
+    model.load_weights(weights_path)
     return model
 
 
