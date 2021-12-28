@@ -35,6 +35,13 @@ args = parser.parse_args()
 
 
 def get_depth_map(color):
+    """Predict a depth map from a single RGB image.
+
+    Args:
+        color : Input color image.
+    Returns:
+        depth : Predicted a depth image corresponding a input RGB image.
+    """
     height, width, _ = color.shape
 
     # if color height != 480 and color width != 640, Resize the input image.
@@ -47,6 +54,14 @@ def get_depth_map(color):
 
 
 def cvt_mm2pixel(inputs, pitch_of_pixel):
+    """Convert mm unit to pixel unit.
+
+    Args:
+        inputs : Input dictionary including image information and lens parameters.
+        pitch_of_pixel : Pixel pitch of LCD.
+    Returns:
+        cvt_inputs : Input dictionary converted pixel units.
+    """
     cvt_inputs = {}
     cvt_inputs['depth'] = utils.cvt_mm2pixel(inputs['depth'], pitch_of_pixel)
     cvt_inputs['P_D'] = utils.cvt_mm2pixel(inputs['P_D'], pitch_of_pixel)
@@ -59,7 +74,7 @@ def cvt_mm2pixel(inputs, pitch_of_pixel):
 def get_input_params():
     """Parameters
     
-    Image
+    Image information
         - color : Color image.
         - depth : Depth image corresponding a color image.
     
