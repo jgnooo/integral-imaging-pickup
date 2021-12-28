@@ -57,10 +57,10 @@ def cvt_mm2pixel(inputs, pitch_of_pixel):
     """Convert mm unit to pixel unit.
 
     Args:
-        inputs : Input dictionary including image information and lens parameters.
+        inputs         : Input dictionary including image information and lens parameters.
         pitch_of_pixel : Pixel pitch of LCD.
     Returns:
-        cvt_inputs : Input dictionary converted pixel units.
+        cvt_inputs     : Input dictionary converted pixel units.
     """
     cvt_inputs = {}
     cvt_inputs['depth'] = utils.cvt_mm2pixel(inputs['depth'], pitch_of_pixel)
